@@ -21,4 +21,6 @@
 
 快捷键读取 `herdr --default-config` 与用户配置；优先使用 Cmd 直达键，其次其他直达键，最后前缀键。`⌃B → C` 表示先按 Ctrl+B，再按 C。Herdr 配置路径依次取插件的 `herdr_config`、`HERDR_CONFIG_PATH`、XDG 配置路径或 `~/.config/herdr/config.toml`。
 
+切换标签页时优先提示序号快捷键；若目标是最后一个标签页且没有可用的序号快捷键，再尝试已配置的 `last_tab`，最后尝试前后切换键。
+
 客户端部分焦点切换每 250 毫秒核对一次。原生交付日志的 `reason = "published"` 仅表示帧已写入，不保证当时前台可见。CI 不包含真实桌面验收，自动化检查不能替代窗口和多屏视觉检查。

@@ -134,10 +134,10 @@ def infer(before: dict | None, after: dict, event: dict | None = None) -> list[t
         if tab_id not in ids:
             return []
         new_index = ids.index(tab_id)
-        options = []
+        # 优先提示目标标签页的序号，最后一个标签页的快捷键仅作备选。
+        options = [("switch_tab", new_index + 1)]
         if new_index == len(ids) - 1:
             options.append(("last_tab", None))
-        options.append(("switch_tab", new_index + 1))
         if old_tab_id in ids:
             old_index = ids.index(old_tab_id)
             if new_index == (old_index + 1) % len(ids):

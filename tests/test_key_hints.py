@@ -113,6 +113,32 @@ class InferenceTests(unittest.TestCase):
         self.assertEqual(infer(before, after)[0], ('switch_tab', 1))
         self.assertIn(('previous_tab', None), infer(before, after))
 
+    def test_last_tab_prefers_its_number_when_both_shortcuts_work(self):
+        after = add_tab(initial())
+        before = copy.deepcopy(after)
+        before['focused_tab_id'], before['focused_pane_id'] = 't1', 'p1'
+        config = {'keys': {'switch_tab': ['prefix+1..9', 'cmd+1', 'cmd+2'],
+                           'command': [{'key': 'cmd+9', 'command': 'last-tab'}]}}
+        keymap = Keymap(DEFAULTS, config, {'last_tab': 'cmd+9'})
+        self.assertEqual(keymap.resolve('last_tab'), '⌘9')
+        self.assertEqual(keymap.choose(infer(before, after)), ('switch_tab', '⌘2'))
+
+    def test_last_tab_falls_back_when_number_binding_is_disabled(self):
+        after = add_tab(initial())
+        before = copy.deepcopy(after)
+        before['focused_tab_id'], before['focused_pane_id'] = 't1', 'p1'
+        config = {'keys': {'switch_tab': '',
+                           'command': [{'key': 'cmd+9', 'command': 'last-tab'}]}}
+        keymap = Keymap(DEFAULTS, config, {'last_tab': 'cmd+9'})
+        self.assertEqual(keymap.choose(infer(before, after)), ('last_tab', '⌘9'))
+
+    def test_unregistered_last_tab_uses_equivalent_navigation(self):
+        after = add_tab(initial())
+        before = copy.deepcopy(after)
+        before['focused_tab_id'], before['focused_pane_id'] = 't1', 'p1'
+        keymap = Keymap(DEFAULTS, {'keys': {'switch_tab': ''}}, {'last_tab': 'cmd+9'})
+        self.assertEqual(keymap.choose(infer(before, after)), ('next_tab', '⌃B → N'))
+
     def test_focus_neighbor(self):
         before = split(initial())
         after = copy.deepcopy(before)
