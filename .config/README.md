@@ -1,42 +1,44 @@
-# Ghostty 与 Herdr 配置示例
+# Ghostty and Herdr configuration examples
 
-这组可选配置将 Ghostty 的常用 Cmd 快捷键传给 Herdr。基于 macOS、Ghostty 1.3.1 和 Herdr 0.9.0 整理；安装[快捷键提示插件](../README.md)无需复制这些文件。
+**[English](README.md)** | [中文](README.zh-CN.md)
 
-## 使用
+These optional settings forward common Ghostty Cmd shortcuts to Herdr. They were prepared for macOS, Ghostty 1.3.1, and Herdr 0.9.0. You do not need to copy them to install the [key hints plugin](../README.md).
 
-先备份本机配置，再按需合并或复制：
+## Setup
 
-| 仓库内文件 | 本机位置 |
+Back up your local configuration, then merge or copy the files you need:
+
+| Repository file | Local destination |
 | --- | --- |
 | `ghostty/config` | `~/Library/Application Support/com.mitchellh.ghostty/config` |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` |
 | `herdr/ghostty.zsh` | `~/.config/herdr/ghostty.zsh` |
 | `herdr/ghostty-key-table.applescript` | `~/.config/herdr/ghostty-key-table.applescript` |
 | `herdr/last-tab.py` | `~/.config/herdr/last-tab.py` |
-| `herdr/plugins/config/local.key-hints/config.toml` | `herdr plugin config-dir local.key-hints` 输出目录中的 `config.toml` |
+| `herdr/plugins/config/local.key-hints/config.toml` | `config.toml` in the directory printed by `herdr plugin config-dir local.key-hints` |
 
-Ghostty 配置包含 Catppuccin Macchiato 主题，以及 JetBrains Mono、Symbols Nerd Font Mono 字体设置。可按本机字体调整。
+The Ghostty configuration uses the Catppuccin Macchiato theme and the JetBrains Mono and Symbols Nerd Font Mono fonts. Adjust the fonts to match your system.
 
-在启动 Herdr 的外层 zsh 的 `~/.zshrc` 中加入：
+Add this to the `~/.zshrc` of the outer zsh shell that launches Herdr:
 
 ```zsh
 source "$HOME/.config/herdr/ghostty.zsh"
 ```
 
-该脚本在启动和退出 Herdr 时，通过 AppleScript 切换对应 Ghostty 窗格的按键表。`last-tab.py` 需要 Python 3，并通过 `HERDR_BIN_PATH` 或 `PATH` 查找 Herdr。
+The script uses AppleScript to switch the corresponding Ghostty pane's key table when Herdr starts and exits. `last-tab.py` requires Python 3 and locates Herdr through `HERDR_BIN_PATH` or `PATH`.
 
-修改后执行 `herdr config check` 和 `herdr server reload-config`，在 Ghostty 按 ⌘⇧, 重载配置。若按键接管未启用，在目标窗格按 Control+Option+Shift+Enter；按 Control+Option+Shift+Esc 可退出接管。
+After making changes, run `herdr config check` and `herdr server reload-config`, then press ⌘⇧, in Ghostty to reload its configuration. If key forwarding is inactive, press Control+Option+Shift+Enter in the target pane. Press Control+Option+Shift+Esc to disable it.
 
-## 快捷键
+## Shortcuts
 
-| 操作 | 快捷键 |
+| Action | Shortcut |
 | --- | --- |
-| 切换 Space / Tab | ⌘⌥ + 1–9 / ⌘ + 1–8 |
-| 切换到最后一个 Tab | ⌘9 |
-| 新建 Space / Tab | ⌘N / ⌘T |
-| 向右 / 向下分屏 | ⌘D / ⌘⇧D |
-| 关闭当前窗格 / Tab | ⌘W / ⌘⌥W |
-| 放大或还原窗格 | ⌘Enter |
-| 切换相邻窗格 | ⌘⌥ + 方向键 |
+| Switch Space / Tab | ⌘⌥ + 1–9 / ⌘ + 1–8 |
+| Switch to the last Tab | ⌘9 |
+| Create Space / Tab | ⌘N / ⌘T |
+| Split right / down | ⌘D / ⌘⇧D |
+| Close current pane / Tab | ⌘W / ⌘⌥W |
+| Toggle pane zoom | ⌘Enter |
+| Switch to an adjacent pane | ⌘⌥ + arrow key |
 
-配置保留 Herdr 的 Control+B 前缀快捷键。Space 组合键已通过 Herdr 隔离测试，Ghostty 真实窗口的按键效果仍待验证。仓库配置与本机配置不会自动同步。
+The configuration retains Herdr's Control+B prefix shortcuts. Space shortcuts have passed isolated Herdr tests; their behavior in a real Ghostty window still needs validation. Repository files and local settings do not sync automatically.

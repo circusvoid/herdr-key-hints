@@ -1,16 +1,18 @@
-# Herdr 快捷键提示
+# Herdr Key Hints
 
-在 Herdr 完成操作后，显示对应的快捷键，帮助熟悉当前键位。支持工作区、标签页和窗格的常用操作；鼠标、键盘和 CLI 触发的操作都可提示。
+**[English](README.md)** | [中文](README.zh-CN.md)
 
-![快捷键提示预览](docs/assets/key-hints-preview.png)
+Learn your current keybindings by showing the matching shortcut after an action in Herdr. Supports common workspace, tab, and pane actions, whether triggered by mouse, keyboard, or CLI.
 
-macOS 使用原生键帽浮层，最多显示最近三组提示，每组停留 2 秒后淡出；连续重复操作显示 `×N`。浮层无声音、不抢焦点，鼠标可穿透。Linux 使用 Herdr 通知。
+![Key hints preview](docs/assets/key-hints-preview.png)
 
-## 安装
+On macOS, a native overlay shows up to three recent hints. Each stays for 2 seconds before fading out; consecutive repeats show `×N`. The overlay is silent, does not take focus, and lets mouse clicks pass through. Linux uses Herdr notifications.
 
-需要 Herdr ≥ 0.9.0、Python ≥ 3.11 和 Git。macOS 首次安装还需要 Xcode Command Line Tools 中的 Swift 编译器；Python 部分仅依赖标准库。
+## Install
 
-确认信任本仓库后执行：
+Requires Herdr ≥ 0.9.0, Python ≥ 3.11, and Git. The first macOS installation also requires the Swift compiler from Xcode Command Line Tools. The Python code uses only the standard library.
+
+Once you trust this repository, run:
 
 ```sh
 herdr plugin install circusvoid/herdr-key-hints --ref v0.1.0 --yes
@@ -18,13 +20,13 @@ herdr plugin action invoke local.key-hints.initialize
 herdr plugin action invoke local.key-hints.preview
 ```
 
-安装时自动检查依赖并编译 macOS 浮层，缺少依赖会终止安装。`preview` 显示“新建标签页”的当前快捷键；原生浮层仅在支持的终端应用位于前台时显示。之后新启动的 Herdr 服务器会自动初始化插件。
+Installation checks dependencies and compiles the macOS overlay automatically. Missing dependencies abort installation. `preview` shows the current shortcut for creating a tab; the native overlay appears only when a supported terminal app is in the foreground. Newly started Herdr servers initialize the plugin automatically.
 
-插件 ID 为 `local.key-hints`，可从 GitHub 正常安装。平台验收范围见[兼容性记录](docs/compatibility.md)。
+The plugin ID is `local.key-hints`; it supports installation from GitHub. See the [compatibility notes](docs/compatibility.md) (Chinese) for tested platforms.
 
-## 配置
+## Configure
 
-执行 `herdr plugin config-dir local.key-hints`，在输出目录中创建 `config.toml`：
+Run `herdr plugin config-dir local.key-hints` and create `config.toml` in the directory it prints:
 
 ```toml
 enabled = true
@@ -35,45 +37,45 @@ hold_ms = 2000
 fade_ms = 200
 ```
 
-`auto` 在 macOS 使用原生浮层，Linux 使用 Herdr 通知。原生浮层支持四角及上下居中，显示在鼠标所在屏幕；`max_visible` 可设为 1–5。终端应用、自定义 Herdr 配置路径等选项见[完整配置示例](config.example.toml)。可选的 Ghostty 键位配置见 [.config](.config/README.md)。
+`auto` uses the native overlay on macOS and Herdr notifications on Linux. The overlay supports all four corners plus top and bottom center, on the screen containing the mouse pointer. `max_visible` accepts 1–5. See the [full configuration example](config.example.toml) (Chinese comments) for terminal apps, custom Herdr configuration paths, and other options. Optional Ghostty keybindings are available in [.config](.config/README.md).
 
-Linux 或 SSH 远端使用 `renderer = "herdr"`，并在 Herdr 配置中设置：
+On Linux or a remote SSH host, use `renderer = "herdr"` and set this in your Herdr configuration:
 
 ```toml
 [ui.toast]
 delivery = "herdr"
 ```
 
-已有 `[ui.toast]` 时修改原表，再执行 `herdr server reload-config`。通知模式只支持四角位置，受 Herdr 通知限流和队列影响。
+If `[ui.toast]` already exists, edit that table, then run `herdr server reload-config`. Notification mode supports only the four corners and is subject to Herdr's notification rate limits and queue.
 
-修改 `renderer` 后，先执行下方的 `stop`，待 `status` 显示暂停且原进程退出后再执行 `initialize`；其他显示参数会在后续操作时读取。修改 Herdr 键位后也需要重载 Herdr。
+After changing `renderer`, run `stop` below. Wait until `status` reports paused and the previous process has exited before running `initialize`. Other display settings are read on subsequent actions. Reload Herdr after changing its keybindings too.
 
-## 暂停、更新和卸载
+## Pause, update, and uninstall
 
 ```sh
 herdr plugin action invoke local.key-hints.stop
 herdr plugin action invoke local.key-hints.status
-# 恢复当前会话
+# Resume in the current session
 herdr plugin action invoke local.key-hints.initialize
 ```
 
-更新时先暂停提示并等待进程退出，再用安装命令指定目标版本，完成后执行 `initialize`。卸载：
+To update, pause hints and wait for the process to exit, run the install command with the desired version, then run `initialize`. To uninstall:
 
 ```sh
 herdr plugin disable local.key-hints
 herdr plugin uninstall local.key-hints
 ```
 
-本地链接的版本使用 `herdr plugin unlink local.key-hints`，源码会保留。从本地链接切换到 GitHub 安装前，先暂停并 unlink。配置和状态位于 Herdr 提供的独立目录中。
+For a locally linked copy, use `herdr plugin unlink local.key-hints`; this keeps the source files. Before switching from a local link to a GitHub installation, pause and unlink the plugin. Configuration and state live in separate directories provided by Herdr.
 
-## 功能边界
+## Limitations
 
-- 提示的是当前配置中的等效快捷键，不代表实际按下的键；显式禁用的绑定不会回退到默认键。
-- 支持工作区和标签页的新建、关闭、切换、重命名，以及分屏、关闭或重命名窗格、放大或还原窗格、可明确推断的相邻窗格切换。
-- 复杂布局变化可能无法识别，极快的连续操作可能合并；尚未覆盖分屏比例、窗格交换、侧栏、复制粘贴或终端应用自身的操作。
-- 前台识别以终端应用为单位，不能区分同一应用中的不同会话窗口；SSH 不会自动在客户端启动原生浮层。
+- Hints show an equivalent shortcut from your current configuration, not necessarily the keys you pressed. Explicitly disabled bindings do not fall back to defaults.
+- Supported actions include creating, closing, switching, and renaming workspaces and tabs; splitting, closing, and renaming panes; toggling pane zoom; and switching to an adjacent pane when the destination can be inferred unambiguously.
+- Complex layout changes may not be recognized, and rapid actions may be merged. Split ratios, pane swaps, the sidebar, copy and paste, and the terminal app's own actions are not covered.
+- Foreground detection works at the terminal app level and cannot distinguish session windows within that app. SSH does not automatically launch the native overlay on the client.
 
-## 本地开发
+## Local development
 
 ```sh
 git clone https://github.com/circusvoid/herdr-key-hints.git
@@ -84,7 +86,7 @@ herdr plugin link "$PWD" --enabled
 herdr plugin action invoke local.key-hints.initialize
 ```
 
-本地 link 不执行构建；移动源码目录前先暂停，移动后重新 link 和 initialize。macOS 若只需通知模式，可用 `prepare --renderer herdr` 检查环境，再在插件配置中设置相同后端。
+Local linking does not run the build. Before moving the source directory, pause the plugin; afterward, link it again and run `initialize`. If you only need notifications on macOS, check dependencies with `prepare --renderer herdr`, then select the same renderer in the plugin configuration.
 
 ```sh
 python3 -m unittest discover -s tests -v
@@ -94,8 +96,8 @@ python3 tests/smoke_install.py --ref v0.1.0
 herdr plugin log list --plugin local.key-hints --limit 20
 ```
 
-集成测试使用临时配置和独立 Herdr 会话。实现与验收限制见[兼容性记录](docs/compatibility.md)。
+Integration tests use temporary configuration and isolated Herdr sessions. See the [compatibility notes](docs/compatibility.md) (Chinese) for implementation details and validation limits.
 
-## 许可证
+## License
 
-[MIT](LICENSE)。视觉结构参考 [Keyviz](https://github.com/mulaRahul/keyviz)，停留与淡出参数参考 [KeyCastr](https://github.com/keycastr/keycastr)；未包含这两个项目的源码或图片。
+[MIT](LICENSE). The visual structure draws inspiration from [Keyviz](https://github.com/mulaRahul/keyviz); hold and fade timings draw inspiration from [KeyCastr](https://github.com/keycastr/keycastr). No source code or images from either project are bundled.
