@@ -1,0 +1,31 @@
+# 复制到 `herdr plugin config-dir local.key-hints` 输出目录中的 config.toml。
+enabled = true
+# auto：macOS 使用原生键帽浮层，Linux 使用兼容的 Herdr 通知。
+# 修改 renderer 后执行 stop，再执行 initialize。
+renderer = "auto"
+# 原生浮层支持四角，以及 top-center / bottom-center。
+position = "bottom-right"
+# 合并同一次操作引发的多个 Herdr 事件。
+settle_ms = 100
+
+# 原生浮层：立即显示最近三组，新组在底部；每组独立停留和淡出。
+# 连续同一动作原地更新 ×N 并重新计时；A→B→A 保留三组顺序。
+max_visible = 3
+hold_ms = 2000
+fade_ms = 200
+# 默认支持 Ghostty、Terminal、iTerm2、WezTerm、Kitty、Alacritty、Warp。
+# 只想在 Ghostty 前台显示时，可取消下一行注释。
+# terminal_apps = ["com.mitchellh.ghostty"]
+
+# 以下仅用于 renderer = "herdr" 的兼容通知，不影响原生浮层。
+# display_ms = 3200
+# retry_ms = 500
+# max_pending = 8
+# max_age_ms = 30000
+
+# 如需读取其他配置文件，可指定路径。
+# herdr_config = "~/.config/herdr/config.toml"
+
+# 只用于已在 Herdr [[keys.command]] 注册的自定义命令。
+# [custom_actions]
+# last_tab = "cmd+9"

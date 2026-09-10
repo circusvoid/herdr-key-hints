@@ -1,0 +1,76 @@
+id = "local.key-hints"
+name = "快捷键提示"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "操作后显示当前配置中的快捷键，不区分鼠标、键盘和 CLI。"
+platforms = ["macos", "linux"]
+
+[[build]]
+command = ["python3", "plugin.py", "prepare"]
+
+[[startup]]
+command = ["python3", "plugin.py", "initialize"]
+
+[[actions]]
+id = "initialize"
+title = "初始化快捷键提示"
+command = ["python3", "plugin.py", "initialize"]
+
+[[actions]]
+id = "preview"
+title = "预览快捷键提示"
+command = ["python3", "plugin.py", "preview"]
+
+[[actions]]
+id = "stop"
+title = "暂停当前会话的快捷键提示"
+command = ["python3", "plugin.py", "stop"]
+
+[[actions]]
+id = "status"
+title = "查看快捷键提示状态"
+command = ["python3", "plugin.py", "status"]
+
+[[events]]
+on = "workspace.created"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "workspace.closed"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "workspace.focused"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "workspace.renamed"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "tab.created"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "tab.closed"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "tab.focused"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "tab.renamed"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "pane.created"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "pane.closed"
+command = ["python3", "plugin.py", "event"]
+
+[[events]]
+on = "pane.focused"
+command = ["python3", "plugin.py", "event"]

@@ -1,0 +1,132 @@
+# ============================================================
+# Ghostty：适合长时间阅读终端和 AI 输出
+# 深色主题，降低文字亮度
+# ============================================================
+
+theme = Catppuccin Macchiato
+
+# 长时间阅读 AI 输出：降低主文字亮度，避免亮白刺眼
+foreground = #9aa3bd
+background = #24273a
+
+# 让粗体不要变成高亮白
+bold-color = #9aa3bd
+
+# 不强制把低对比颜色拉亮太多
+minimum-contrast = 1.1
+
+# 压低 ANSI 白色 / 亮白，很多 CLI / AI 输出会用到
+palette = 7=#9aa3bd
+palette = 15=#a5adcb
+
+font-family = JetBrains Mono
+font-family = Symbols Nerd Font Mono
+
+font-size = 15
+font-thicken = false
+adjust-cell-height = 2
+
+# 输出极多时必须加大
+scrollback-limit = 200000000
+
+# selection：明显但不刺眼
+selection-foreground = #cad3f5
+selection-background = #494d64
+
+# 关闭透明
+background-opacity = 1.0
+
+# 分割线：可见但不过亮
+split-divider-color = #494d64
+
+# 非聚焦 split 稍微压暗
+unfocused-split-opacity = 0.85
+
+cursor-click-to-move = true
+cursor-style-blink = true
+
+keybind = cmd+enter=toggle_split_zoom
+keybind = shift+cmd+enter=toggle_fullscreen
+
+
+# BEGIN Herdr 快捷键接管
+# 由 ~/.config/herdr/ghostty.zsh 在启动/退出 Herdr 时按窗格切换。
+# 使用 CSI 编码，确保 Cmd 及组合修饰键完整传入 Herdr。
+keybind = herdr/cmd+n=csi:110;9u
+keybind = herdr/cmd+key_n=csi:110;9u
+keybind = herdr/cmd+shift+n=csi:110;10u
+keybind = herdr/cmd+shift+key_n=csi:110;10u
+keybind = herdr/cmd+t=csi:116;9u
+keybind = herdr/ctrl+shift+tab=csi:9;6u
+keybind = herdr/ctrl+tab=csi:9;5u
+keybind = herdr/cmd+shift+[=csi:91;10u
+keybind = herdr/cmd+shift+]=csi:93;10u
+keybind = herdr/cmd+alt+w=csi:119;11u
+keybind = herdr/cmd+d=csi:100;9u
+keybind = herdr/cmd+shift+d=csi:100;10u
+keybind = herdr/cmd+w=csi:119;9u
+keybind = herdr/cmd+enter=csi:13;9u
+keybind = herdr/cmd+[=csi:91;9u
+keybind = herdr/cmd+]=csi:93;9u
+keybind = herdr/cmd+comma=csi:44;9u
+keybind = herdr/cmd+alt+arrow_left=csi:1;11D
+keybind = herdr/cmd+ctrl+arrow_left=csi:1;13D
+keybind = herdr/cmd+alt+arrow_down=csi:1;11B
+keybind = herdr/cmd+ctrl+arrow_down=csi:1;13B
+keybind = herdr/cmd+alt+arrow_up=csi:1;11A
+keybind = herdr/cmd+ctrl+arrow_up=csi:1;13A
+keybind = herdr/cmd+alt+arrow_right=csi:1;11C
+keybind = herdr/cmd+ctrl+arrow_right=csi:1;13C
+# Command+Option+数字直接切换 Herdr Space。
+keybind = herdr/cmd+alt+1=csi:49;11u
+keybind = herdr/cmd+alt+digit_1=csi:49;11u
+keybind = herdr/cmd+alt+2=csi:50;11u
+keybind = herdr/cmd+alt+digit_2=csi:50;11u
+keybind = herdr/cmd+alt+3=csi:51;11u
+keybind = herdr/cmd+alt+digit_3=csi:51;11u
+keybind = herdr/cmd+alt+4=csi:52;11u
+keybind = herdr/cmd+alt+digit_4=csi:52;11u
+keybind = herdr/cmd+alt+5=csi:53;11u
+keybind = herdr/cmd+alt+digit_5=csi:53;11u
+keybind = herdr/cmd+alt+6=csi:54;11u
+keybind = herdr/cmd+alt+digit_6=csi:54;11u
+keybind = herdr/cmd+alt+7=csi:55;11u
+keybind = herdr/cmd+alt+digit_7=csi:55;11u
+keybind = herdr/cmd+alt+8=csi:56;11u
+keybind = herdr/cmd+alt+digit_8=csi:56;11u
+keybind = herdr/cmd+alt+9=csi:57;11u
+keybind = herdr/cmd+alt+digit_9=csi:57;11u
+keybind = herdr/cmd+1=csi:49;9u
+keybind = herdr/cmd+digit_1=csi:49;9u
+keybind = herdr/cmd+2=csi:50;9u
+keybind = herdr/cmd+digit_2=csi:50;9u
+keybind = herdr/cmd+3=csi:51;9u
+keybind = herdr/cmd+digit_3=csi:51;9u
+keybind = herdr/cmd+4=csi:52;9u
+keybind = herdr/cmd+digit_4=csi:52;9u
+keybind = herdr/cmd+5=csi:53;9u
+keybind = herdr/cmd+digit_5=csi:53;9u
+keybind = herdr/cmd+6=csi:54;9u
+keybind = herdr/cmd+digit_6=csi:54;9u
+keybind = herdr/cmd+7=csi:55;9u
+keybind = herdr/cmd+digit_7=csi:55;9u
+keybind = herdr/cmd+8=csi:56;9u
+keybind = herdr/cmd+digit_8=csi:56;9u
+keybind = herdr/cmd+9=csi:57;9u
+# 补充物理键别名，兼容输入法及不携带文本的键盘事件。
+keybind = herdr/cmd+key_t=csi:116;9u
+keybind = herdr/cmd+shift+bracket_left=csi:91;10u
+keybind = herdr/cmd+shift+bracket_right=csi:93;10u
+keybind = herdr/cmd+alt+key_w=csi:119;11u
+keybind = herdr/cmd+key_d=csi:100;9u
+keybind = herdr/cmd+shift+key_d=csi:100;10u
+keybind = herdr/cmd+key_w=csi:119;9u
+keybind = herdr/cmd+bracket_left=csi:91;9u
+keybind = herdr/cmd+bracket_right=csi:93;9u
+keybind = herdr/cmd+digit_9=csi:57;9u
+# 重载配置会清空活动按键表；恢复入口必须定义在默认表中。
+# 在 Herdr 所在的 Ghostty 标签内按 Ctrl+Option+Shift+Enter 恢复接管。
+keybind = ctrl+alt+shift+enter=activate_key_table:herdr
+# 应急恢复当前 Ghostty 窗格的默认快捷键。
+keybind = herdr/ctrl+alt+shift+escape=deactivate_key_table
+# END Herdr 快捷键接管

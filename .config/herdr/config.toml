@@ -1,0 +1,45 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+# 与 Ghostty 对齐；保留原有 Ctrl+B 前缀快捷键。
+[keys]
+new_workspace = ["prefix+shift+n", "cmd+n"]
+new_worktree = ["prefix+shift+g", "cmd+shift+n"]
+switch_workspace = "cmd+alt+1..9"
+new_tab = ["prefix+c", "cmd+t"]
+previous_tab = ["prefix+p", "ctrl+shift+tab", "cmd+shift+["]
+next_tab = ["prefix+n", "ctrl+tab", "cmd+shift+]"]
+switch_tab = ["prefix+1..9", "cmd+1", "cmd+2", "cmd+3", "cmd+4", "cmd+5", "cmd+6", "cmd+7", "cmd+8"]
+close_tab = ["prefix+shift+x", "cmd+alt+w"]
+split_vertical = ["prefix+v", "cmd+d"]
+split_horizontal = ["prefix+minus", "cmd+shift+d"]
+close_pane = ["prefix+x", "cmd+w"]
+zoom = ["prefix+z", "cmd+enter"]
+cycle_pane_previous = ["prefix+shift+tab", "cmd+["]
+cycle_pane_next = ["prefix+tab", "cmd+]"]
+focus_pane_left = ["prefix+h", "cmd+alt+left"]
+focus_pane_down = ["prefix+j", "cmd+alt+down"]
+focus_pane_up = ["prefix+k", "cmd+alt+up"]
+focus_pane_right = ["prefix+l", "cmd+alt+right"]
+resize_pane_left = "cmd+ctrl+left"
+resize_pane_down = "cmd+ctrl+down"
+resize_pane_up = "cmd+ctrl+up"
+resize_pane_right = "cmd+ctrl+right"
+settings = ["prefix+s", "cmd+comma"]
+
+# Ghostty 的 Cmd+9 表示最后一个标签页。
+[[keys.command]]
+key = "cmd+9"
+type = "shell"
+command = 'python3 "$HOME/.config/herdr/last-tab.py"'
+description = "切换到最后一个标签页"
+
+[ui]
+prompt_new_tab_name = false
+
+# 启用 Herdr 内置通知，用于显示快捷键提示。
+[ui.toast]
+delivery = "herdr"

@@ -1,0 +1,12 @@
+# 复制到 `herdr plugin config-dir local.key-hints` 输出目录中的 config.toml。
+enabled = true
+position = "bottom-right"
+# 合并一次操作引发的多个事件；不控制 Herdr 通知本身的停留时间。
+settle_ms = 100
+# 如需读取其他配置文件，可指定绝对路径或以 ~/ 开头的路径。
+# herdr_config = "~/.config/herdr/config.toml"
+
+# 只用于 [[keys.command]] 注册的自定义命令：显式说明命令的业务含义。
+# 对应按键必须存在于 Herdr 配置的 keys.command 中，否则不会提示。
+[custom_actions]
+last_tab = "cmd+9"

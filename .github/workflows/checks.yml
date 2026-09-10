@@ -1,0 +1,26 @@
+name: 插件检查
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: 记录系统和架构
+        run: uname -sm
+      - name: Python 回归测试
+        run: python3 -m unittest discover -s tests -v
+      - name: Swift 编译检查
+        if: runner.os == 'macOS'
+        run: swiftc -typecheck native/KeyHints.swift
